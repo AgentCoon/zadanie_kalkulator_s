@@ -1,0 +1,11 @@
+#
+# Application Configuration
+#
+
+logging:
+  level:
+    com.agentcoon: DEBUG
+
+exchangeRate:
+  baseCurrency: PLN
+  exchangeRateProviderUrl: ""
