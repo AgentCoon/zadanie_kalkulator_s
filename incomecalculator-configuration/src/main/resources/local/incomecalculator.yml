@@ -1,7 +1,3 @@
-#
-# Application Configuration
-#
-
 daysInMonth: 22
 
 exchangeRateConfiguration:
