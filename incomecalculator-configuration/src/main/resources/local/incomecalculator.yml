@@ -2,5 +2,11 @@
 # Application Configuration
 #
 
-exchange:
+daysInMonth: 22
+
+exchangeRateConfiguration:
   baseCurrency: PLN
+  provider: fixer
+
+fixerConfiguration:
+  url: https://api.fixer.io/

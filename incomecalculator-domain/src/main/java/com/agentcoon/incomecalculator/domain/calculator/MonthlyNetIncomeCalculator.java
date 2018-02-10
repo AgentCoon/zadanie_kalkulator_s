@@ -7,6 +7,7 @@ import com.agentcoon.incomecalculator.domain.Money;
 import com.agentcoon.incomecalculator.domain.currencyconverter.CurrencyConverter;
 import com.agentcoon.incomecalculator.domain.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,7 +15,8 @@ import java.math.BigDecimal;
 @Component
 public class MonthlyNetIncomeCalculator {
 
-    private static final int DAYS_IN_MONTH = 22;
+    @Value("${daysInMonth}")
+    private int daysInMonth;
 
     private final CountryRepository countryRepository;
     private final CurrencyConverter currencyConverter;
@@ -41,7 +43,7 @@ public class MonthlyNetIncomeCalculator {
     }
 
     private BigDecimal calculateNetMonthlyIncome(BigDecimal dailyRate, Country country) {
-        BigDecimal monthlyIncome = dailyRate.multiply(BigDecimal.valueOf(DAYS_IN_MONTH));
+        BigDecimal monthlyIncome = dailyRate.multiply(BigDecimal.valueOf(daysInMonth));
         BigDecimal monthlyTaxableIncome = BigDecimal.valueOf(Math.max(0.0f, monthlyIncome.subtract(country.getFixedCostValue()).floatValue()));
         BigDecimal tax = monthlyTaxableIncome.multiply(country.getTaxRateValue());
 

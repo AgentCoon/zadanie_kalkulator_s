@@ -13,10 +13,10 @@ import java.util.concurrent.TimeUnit;
 public class FixerRestClientFactory {
 
     private final ObjectMapper objectMapper;
-    private final FixerRestConfiguration config;
+    private final FixerConfiguration config;
 
     @Autowired
-    public FixerRestClientFactory(ObjectMapper objectMapper, FixerRestConfiguration config) {
+    public FixerRestClientFactory(ObjectMapper objectMapper, FixerConfiguration config) {
         this.objectMapper = objectMapper;
         this.config = config;
     }
@@ -25,7 +25,7 @@ public class FixerRestClientFactory {
         return getRetrofitInstance(config).create(FixerExchangeRateClient.class);
     }
 
-    private Retrofit getRetrofitInstance(FixerRestConfiguration config) {
+    private Retrofit getRetrofitInstance(FixerConfiguration config) {
         return new Retrofit.Builder()
                 .client(getHttpClient())
                 .baseUrl(config.getUrl())

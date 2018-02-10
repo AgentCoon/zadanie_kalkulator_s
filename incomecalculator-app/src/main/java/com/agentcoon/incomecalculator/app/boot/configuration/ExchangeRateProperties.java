@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @ComponentScan("com.agentcoon")
 @Configuration
-@ConfigurationProperties("exchange")
+@ConfigurationProperties("exchangeRateConfiguration")
 @EnableConfigurationProperties
 public class ExchangeRateProperties {
 
