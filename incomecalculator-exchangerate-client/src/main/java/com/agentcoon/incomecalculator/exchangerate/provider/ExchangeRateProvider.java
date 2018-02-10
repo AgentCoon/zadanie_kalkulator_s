@@ -1,13 +1,10 @@
 package com.agentcoon.incomecalculator.exchangerate.provider;
 
-import com.agentcoon.incomecalculator.exchangerate.client.api.ExchangeRateDto;
 import com.agentcoon.incomecalculator.exchangerate.exception.ExchangeRateNotFoundException;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 public interface ExchangeRateProvider {
 
-    List<ExchangeRateDto> getExchangeRates(String baseCurrency);
-
-    ExchangeRateDto getExchangeRate(String baseCurrency, String targetCurrency) throws ExchangeRateNotFoundException;
+    BigDecimal getExchangeRate(String sourceCurrency, String targetCurrency) throws ExchangeRateNotFoundException;
 }

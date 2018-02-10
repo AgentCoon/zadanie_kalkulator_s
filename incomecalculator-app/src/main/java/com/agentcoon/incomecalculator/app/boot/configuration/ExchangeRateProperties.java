@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 public class ExchangeRateProperties {
 
-    private String baseCurrency;
+    private String targetCurrency;
 
-    public String getBaseCurrency() {
-        return baseCurrency;
+    public String getTargetCurrency() {
+        return targetCurrency;
     }
 
-    public void setBaseCurrency(String baseCurrency) {
-        this.baseCurrency = baseCurrency;
+    public void setTargetCurrency(String targetCurrency) {
+        this.targetCurrency = targetCurrency;
     }
 }

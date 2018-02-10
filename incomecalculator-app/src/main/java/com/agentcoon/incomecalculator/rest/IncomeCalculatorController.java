@@ -36,7 +36,7 @@ public class IncomeCalculatorController {
     public ResponseEntity<MonthlyNetIncomeDto> calculateIncome(@RequestBody IncomeRequestDto dto) {
 
         try {
-            Currency targetCurrency = new Currency(exchangeRateProperties.getBaseCurrency());
+            Currency targetCurrency = new Currency(exchangeRateProperties.getTargetCurrency());
             Money calculatedNetIncome = monthlyNetIncomeCalculator.calculate(dto.getAmount(), dto.getCountryCode(), targetCurrency);
 
             return ResponseEntity.ok().body(moneyMapper.from(calculatedNetIncome));

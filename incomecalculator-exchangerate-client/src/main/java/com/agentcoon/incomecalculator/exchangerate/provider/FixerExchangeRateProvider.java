@@ -1,16 +1,14 @@
 package com.agentcoon.incomecalculator.exchangerate.provider;
 
 import com.agentcoon.incomecalculator.exchangerate.client.api.ExchangeRateApiDto;
-import com.agentcoon.incomecalculator.exchangerate.client.api.ExchangeRateDto;
 import com.agentcoon.incomecalculator.exchangerate.exception.ExchangeRateNotFoundException;
 import com.agentcoon.incomecalculator.exchangerate.provider.fixer.FixerGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-@Component
+@Component("fixerExchangeRateProvider")
 public class FixerExchangeRateProvider implements ExchangeRateProvider {
 
     private final FixerGateway fixerGateway;
@@ -21,25 +19,17 @@ public class FixerExchangeRateProvider implements ExchangeRateProvider {
     }
 
     @Override
-    public List<ExchangeRateDto> getExchangeRates(String baseCurrency) {
+    public BigDecimal getExchangeRate(String sourceCurrency, String targetCurrency) throws ExchangeRateNotFoundException {
 
-        ExchangeRateApiDto dto = fixerGateway.fetchExchangeRates(baseCurrency);
-
-        return dto.toFlatList();
-    }
-
-    @Override
-    public ExchangeRateDto getExchangeRate(String baseCurrency, String targetCurrency) throws ExchangeRateNotFoundException {
-
-        ExchangeRateApiDto dto = fixerGateway.fetchExchangeRates(baseCurrency);
+        ExchangeRateApiDto dto = fixerGateway.fetchExchangeRates(sourceCurrency);
 
         BigDecimal rate = dto.getRates().get(targetCurrency);
 
         if (rate == null) {
-            throw new ExchangeRateNotFoundException("Exchange rate from " + baseCurrency +
+            throw new ExchangeRateNotFoundException("Exchange rate from " + sourceCurrency +
                     " to " + targetCurrency + " not found.");
         }
 
-        return new ExchangeRateDto(baseCurrency, targetCurrency, rate);
+        return rate;
     }
 }
