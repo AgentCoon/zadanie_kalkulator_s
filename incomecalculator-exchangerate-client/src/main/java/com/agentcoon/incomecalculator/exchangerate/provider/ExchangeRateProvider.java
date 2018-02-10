@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ExchangeRateProvider {
 
-    List<ExchangeRateDto> getExchangeRates();
+    List<ExchangeRateDto> getExchangeRates(String baseCurrency);
 
     ExchangeRateDto getExchangeRate(String baseCurrency, String targetCurrency) throws ExchangeRateNotFoundException;
 }

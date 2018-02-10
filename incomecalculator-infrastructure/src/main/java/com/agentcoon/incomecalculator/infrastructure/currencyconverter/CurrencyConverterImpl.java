@@ -1,8 +1,8 @@
 package com.agentcoon.incomecalculator.infrastructure.currencyconverter;
 
 import com.agentcoon.incomecalculator.domain.Currency;
-import com.agentcoon.incomecalculator.domain.currencyconverter.CurrencyConverter;
 import com.agentcoon.incomecalculator.domain.ExchangeRate;
+import com.agentcoon.incomecalculator.domain.currencyconverter.CurrencyConverter;
 import com.agentcoon.incomecalculator.domain.exception.NotFoundException;
 import com.agentcoon.incomecalculator.exchangerate.client.api.ExchangeRateDto;
 import com.agentcoon.incomecalculator.exchangerate.exception.ExchangeRateNotFoundException;
@@ -21,7 +21,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     private final ExchangeRateDtoMapper exchangeRateDtoMapper;
 
     @Autowired
-    public CurrencyConverterImpl(@Qualifier("inMemoryExchangeRateProvider") ExchangeRateProvider exchangeRatesProvider,
+    public CurrencyConverterImpl(@Qualifier("fixerExchangeRateProvider") ExchangeRateProvider exchangeRatesProvider,
                                  ExchangeRateDtoMapper exchangeRateDtoMapper) {
         this.exchangeRatesProvider = exchangeRatesProvider;
         this.exchangeRateDtoMapper = exchangeRateDtoMapper;
@@ -31,7 +31,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     public BigDecimal convert(Currency sourceCurrency, Currency targetCurrency, BigDecimal amount) throws NotFoundException {
 
         try {
-            ExchangeRateDto exchangeRateDto = exchangeRatesProvider.getExchangeRate(targetCurrency.getCurrencyCode(), sourceCurrency.getCurrencyCode());
+            ExchangeRateDto exchangeRateDto = exchangeRatesProvider.getExchangeRate(sourceCurrency.getCurrencyCode(), targetCurrency.getCurrencyCode());
             ExchangeRate exchangeRate = exchangeRateDtoMapper.from(exchangeRateDto);
 
             return amount.multiply(exchangeRate.getConversionRate());
