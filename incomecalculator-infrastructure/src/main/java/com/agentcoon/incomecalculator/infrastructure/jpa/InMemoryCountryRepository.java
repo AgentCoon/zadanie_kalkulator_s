@@ -4,40 +4,50 @@ import com.agentcoon.incomecalculator.domain.Country;
 import com.agentcoon.incomecalculator.domain.CountryRepository;
 import com.agentcoon.incomecalculator.domain.Currency;
 import com.agentcoon.incomecalculator.domain.TaxRate;
+import com.agentcoon.incomecalculator.domain.exception.NotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CountryInMemoryRepository implements CountryRepository {
+public class InMemoryCountryRepository implements CountryRepository {
 
     private List<Country> countries = new ArrayList<>();
 
+    public InMemoryCountryRepository() {
+        populateDummyData();
+    }
+
     @Override
     public List<Country> findAll() {
-        populateDummyData();
-
         return countries;
+    }
+
+    @Override
+    public Country findOneByCountryCode(String countryCode) throws NotFoundException {
+        return countries.stream()
+                .filter(e -> e.getCountryCode().equals(countryCode)).findFirst()
+                .orElseThrow(() -> new NotFoundException("Country with code " + countryCode + " not found"));
     }
 
     private void populateDummyData() {
         TaxRate polandTaxRate = new TaxRate.Builder()
-                .withRate(0.19f)
-                .withFixedCost(1200f).build();
+                .withRate(BigDecimal.valueOf(0.19))
+                .withFixedCost(BigDecimal.valueOf(1200)).build();
 
         TaxRate ukTaxRate = new TaxRate.Builder()
-                .withRate(0.25f)
-                .withFixedCost(600f).build();
+                .withRate(BigDecimal.valueOf(0.25))
+                .withFixedCost(BigDecimal.valueOf(600)).build();
 
         TaxRate germanyTaxRate = new TaxRate.Builder()
-                .withRate(0.2f)
-                .withFixedCost(800f).build();
+                .withRate(BigDecimal.valueOf(0.2))
+                .withFixedCost(BigDecimal.valueOf(800)).build();
 
-        Currency pln = new Currency.Builder().withCurrencyCode("PLN").build();
-        Currency eur = new Currency.Builder().withCurrencyCode("EUR").build();
-        Currency gbp = new Currency.Builder().withCurrencyCode("GBP").build();
+        Currency pln = new Currency("PLN");
+        Currency eur = new Currency("EUR");
+        Currency gbp = new Currency("GBP");
 
         Country poland = new Country.Builder()
                 .withName("Poland")

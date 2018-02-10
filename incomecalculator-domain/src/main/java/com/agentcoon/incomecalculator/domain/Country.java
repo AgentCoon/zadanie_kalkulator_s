@@ -1,5 +1,7 @@
 package com.agentcoon.incomecalculator.domain;
 
+import java.math.BigDecimal;
+
 public class Country {
 
     private final String name;
@@ -22,12 +24,24 @@ public class Country {
         return countryCode;
     }
 
-    public TaxRate getTaxRate() {
-        return taxRate;
-    }
-
     public Currency getCurrency() {
         return currency;
+    }
+
+    public String getCurrencyCode() {
+        return currency.getCurrencyCode();
+    }
+
+    public BigDecimal getTaxRateValue() {
+        return taxRate.getRate();
+    }
+
+    public BigDecimal getFixedCostValue() {
+        return taxRate.getFixedCost();
+    }
+
+    public boolean currencyIsTheSameAs(Currency otherCurrency) {
+        return currency.equals(otherCurrency);
     }
 
     public static class Builder {

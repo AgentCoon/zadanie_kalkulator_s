@@ -1,33 +1,35 @@
 package com.agentcoon.incomecalculator.domain;
 
+import java.math.BigDecimal;
+
 public class TaxRate {
 
-    private final Float rate;
-    private final Float fixedCost;
+    private final BigDecimal rate;
+    private final BigDecimal fixedCost;
 
-    private TaxRate(Float rate, Float fixedCost) {
+    private TaxRate(BigDecimal rate, BigDecimal fixedCost) {
         this.rate = rate;
         this.fixedCost = fixedCost;
     }
 
-    public Float getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
-    public Float getFixedCost() {
+    public BigDecimal getFixedCost() {
         return fixedCost;
     }
 
     public static class Builder {
-        private Float rate;
-        private Float fixedCost;
+        private BigDecimal rate;
+        private BigDecimal fixedCost;
 
-        public Builder withRate(Float rate) {
+        public Builder withRate(BigDecimal rate) {
             this.rate = rate;
             return this;
         }
 
-        public Builder withFixedCost(Float fixedCost) {
+        public Builder withFixedCost(BigDecimal fixedCost) {
             this.fixedCost = fixedCost;
             return this;
         }

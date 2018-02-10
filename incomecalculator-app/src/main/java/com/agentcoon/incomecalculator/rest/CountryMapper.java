@@ -10,6 +10,7 @@ public class CountryMapper {
     public CountryDto from(Country country) {
         return new CountryDto.Builder()
                 .withName(country.getName())
-                .withCurrency(country.getCurrency().getCurrencyCode()).build();
+                .withCountryCode(country.getCountryCode())
+                .withCurrency(country.getCurrencyCode()).build();
     }
 }

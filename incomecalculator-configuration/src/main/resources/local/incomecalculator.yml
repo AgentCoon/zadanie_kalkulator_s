@@ -2,12 +2,5 @@
 # Application Configuration
 #
 
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://localhost:5433/test
-#    username: user
-#    password: password
-#    driver-class-name: org.postgresql.Driver
-
 exchange:
   baseCurrency: PLN

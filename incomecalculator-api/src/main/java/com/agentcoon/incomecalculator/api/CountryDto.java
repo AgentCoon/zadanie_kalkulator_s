@@ -2,16 +2,22 @@ package com.agentcoon.incomecalculator.api;
 
 public class CountryDto {
 
-    private String name;
-    private String currency;
+    private final String name;
+    private final String countryCode;
+    private final String currency;
 
-    public CountryDto(String name, String currency) {
+    private CountryDto(String name, String countryCode, String currency) {
         this.name = name;
+        this.countryCode = countryCode;
         this.currency = currency;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
     }
 
     public String getCurrency() {
@@ -20,10 +26,16 @@ public class CountryDto {
 
     public static class Builder {
         private String name;
+        private String countryCode;
         private String currency;
 
         public Builder withName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder withCountryCode(String countryCode) {
+            this.countryCode = countryCode;
             return this;
         }
 
@@ -33,7 +45,7 @@ public class CountryDto {
         }
 
         public CountryDto build() {
-            return new CountryDto(name, currency);
+            return new CountryDto(name, countryCode, currency);
         }
     }
 }

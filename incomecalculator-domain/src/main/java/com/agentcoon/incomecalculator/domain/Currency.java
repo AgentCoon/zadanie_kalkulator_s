@@ -1,10 +1,12 @@
 package com.agentcoon.incomecalculator.domain;
 
+import java.util.Objects;
+
 public class Currency {
 
     private final String currencyCode;
 
-    private Currency(String currencyCode) {
+    public Currency(String currencyCode) {
         this.currencyCode = currencyCode;
     }
 
@@ -12,16 +14,16 @@ public class Currency {
         return currencyCode;
     }
 
-    public static class Builder {
-        private String currencyCode;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Currency currency = (Currency) o;
+        return currencyCode.equals(currency.currencyCode);
+    }
 
-        public Builder withCurrencyCode(String currencyCode) {
-            this.currencyCode = currencyCode;
-            return this;
-        }
-
-        public Currency build() {
-            return new Currency(currencyCode);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(currencyCode);
     }
 }

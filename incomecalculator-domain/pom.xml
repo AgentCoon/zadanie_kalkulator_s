@@ -26,6 +26,12 @@
             <artifactId>guava</artifactId>
             <version>${com.google.guava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tngtech.java</groupId>
+            <artifactId>junit-dataprovider</artifactId>
+            <version>${com.tngtech.java.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
