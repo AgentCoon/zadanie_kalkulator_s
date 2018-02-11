@@ -1,0 +1,9 @@
+daysInMonth: 22
+
+exchangeRateConfiguration:
+  targetCurrency: PLN
+  provider: fixerExchangeRateProvider
+#  provider: inMemoryExchangeRateProvider
+
+fixerConfiguration:
+  url: https://api.fixer.io/
