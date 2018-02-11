@@ -7,6 +7,8 @@ public class MonthlyNetIncomeDto {
     private BigDecimal amount;
     private String currency;
 
+    public MonthlyNetIncomeDto() {}
+
     private MonthlyNetIncomeDto(BigDecimal amount, String currency) {
         this.amount = amount;
         this.currency = currency;

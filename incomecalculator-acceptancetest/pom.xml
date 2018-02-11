@@ -19,7 +19,7 @@
 
         <!-- Plugins -->
         <org.codehaus.cargo.cargo-maven2-plugin.version>1.4.17</org.codehaus.cargo.cargo-maven2-plugin.version>
-        <process-exec-maven-plugin.version>0.7</process-exec-maven-plugin.version>
+        <process-exec-maven-plugin.version>0.8</process-exec-maven-plugin.version>
 
         <!-- Dependencies -->
         <org.spockframework.spock-core.version>1.0-groovy-2.4</org.spockframework.spock-core.version>
@@ -31,7 +31,7 @@
             <groupId>com.agentcoon</groupId>
             <artifactId>incomecalculator-app</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <!--<scope>runtime</scope>-->
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.agentcoon</groupId>
@@ -88,6 +88,7 @@
             </exclusions>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <!-- Tests are written using Spock which needs a Groovy compiler -->
@@ -145,35 +146,6 @@
                 </executions>
             </plugin>
 
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<mainClass>com.agentcoon.incomecalculator.app.boot.IncomeCalculatorApplication</mainClass>-->
-                    <!--<layout>ZIP</layout>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>pre-integration-test</id>-->
-                        <!--<goals>-->
-                            <!--<goal>start</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<arguments>-->
-                                <!--<argument>&#45;&#45;spring.config.location="/home/agu/Projects/incomecalculator/incomecalculator-configuration/src/main/resources/acceptancetest/incomecalculator.yml"</argument>-->
-                            <!--</arguments>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>post-integration-test</id>-->
-                        <!--<goals>-->
-                            <!--<goal>stop</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-
-
             <plugin>
                 <!-- Start the application under test -->
                 <groupId>com.bazaarvoice.maven.plugins</groupId>
@@ -194,8 +166,7 @@
                                 <argument>java</argument>
                                 <argument>-jar</argument>
                                 <argument>${project.basedir}/../incomecalculator-app/target/incomecalculator-app-${project.version}.jar</argument>
-                                <argument>spring.config.location="/home/agu/Projects/incomecalculator/incomecalculator-configuration/src/main/resources/acceptancetest/incomecalculator.yml"</argument>
-                                <!--<argument>-spring.config.location="${project.basedir}/../incomecalculator-configuration/src/main/resources/acceptancetest/incomecalculator.yml"</argument>-->
+                                <argument>--spring.config.location=${project.basedir}/../incomecalculator-configuration/src/main/resources/acceptancetest/incomecalculator.yml</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -208,6 +179,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 

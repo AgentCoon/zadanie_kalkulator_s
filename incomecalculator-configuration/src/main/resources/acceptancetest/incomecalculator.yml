@@ -2,7 +2,7 @@ daysInMonth: 22
 
 exchangeRateConfiguration:
   targetCurrency: PLN
-  provider: inMemoryExchangeRateProvider
+  provider: fixerExchangeRateProvider
 
 fixerConfiguration:
-  url: https://api.fixer.io/
+  url: http://localhost:8581/

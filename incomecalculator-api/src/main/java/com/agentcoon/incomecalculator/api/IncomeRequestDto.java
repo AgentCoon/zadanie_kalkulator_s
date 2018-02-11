@@ -24,4 +24,23 @@ public class IncomeRequestDto {
     public BigDecimal getAmount() {
         return amount;
     }
+
+    public static class Builder {
+        private String countryCode;
+        private BigDecimal amount;
+
+        public Builder withCountryCode(String countryCode) {
+            this.countryCode = countryCode;
+            return this;
+        }
+
+        public Builder withAmount(BigDecimal amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public IncomeRequestDto build() {
+            return new IncomeRequestDto(countryCode, amount);
+        }
+    }
 }

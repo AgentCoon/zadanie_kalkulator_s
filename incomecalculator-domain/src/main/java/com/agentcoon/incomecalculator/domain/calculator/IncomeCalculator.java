@@ -31,7 +31,7 @@ public class IncomeCalculator {
 
         Country country = countryRepository.findOneByCountryCode(countryCode);
 
-        BigDecimal netMonthlyIncome = monthlyNetIncomeCalculator.calculateNetMonthlyIncome(dailyRate, country);
+        BigDecimal netMonthlyIncome = monthlyNetIncomeCalculator.calculate(dailyRate, country);
 
         if (country.currencyIsTheSameAs(targetCurrency)) {
             return new Money(netMonthlyIncome, targetCurrency);

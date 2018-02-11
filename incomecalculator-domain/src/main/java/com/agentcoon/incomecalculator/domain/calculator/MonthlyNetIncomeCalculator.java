@@ -18,7 +18,7 @@ public class MonthlyNetIncomeCalculator {
         this.daysInMonth = daysInMonth;
     }
 
-    public BigDecimal calculateNetMonthlyIncome(BigDecimal dailyRate, Country country) {
+    public BigDecimal calculate(BigDecimal dailyRate, Country country) {
         BigDecimal monthlyIncome = dailyRate.multiply(BigDecimal.valueOf(daysInMonth));
         BigDecimal monthlyTaxableIncome = BigDecimal.valueOf(Math.max(0.0f, monthlyIncome.subtract(country.getFixedCostValue()).floatValue()));
         BigDecimal tax = monthlyTaxableIncome.multiply(country.getTaxRateValue());

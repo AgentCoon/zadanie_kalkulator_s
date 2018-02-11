@@ -31,7 +31,7 @@ public class MonthlyNetIncomeCalculatorTest {
     @UseDataProvider("monthlyNetIncomeCalculatorDataProvider")
     public void test(BigDecimal dailyRate, Country country, BigDecimal expectedResult) {
 
-        BigDecimal result = monthlyNetIncomeCalculator.calculateNetMonthlyIncome(dailyRate, country);
+        BigDecimal result = monthlyNetIncomeCalculator.calculate(dailyRate, country);
         assertThat(expectedResult, Matchers.comparesEqualTo(result));
     }
 

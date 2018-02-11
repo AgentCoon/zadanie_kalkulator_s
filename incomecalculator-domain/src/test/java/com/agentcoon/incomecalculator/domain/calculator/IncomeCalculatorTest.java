@@ -1,6 +1,9 @@
 package com.agentcoon.incomecalculator.domain.calculator;
 
-import com.agentcoon.incomecalculator.domain.*;
+import com.agentcoon.incomecalculator.domain.Country;
+import com.agentcoon.incomecalculator.domain.CountryRepository;
+import com.agentcoon.incomecalculator.domain.Currency;
+import com.agentcoon.incomecalculator.domain.Money;
 import com.agentcoon.incomecalculator.domain.currencyconverter.CurrencyConverter;
 import com.agentcoon.incomecalculator.domain.exception.NotFoundException;
 import org.junit.Before;
@@ -43,13 +46,13 @@ public class IncomeCalculatorTest {
         BigDecimal expectedNetIncome = BigDecimal.valueOf(4500.20);
 
         when(countryRepository.findOneByCountryCode(countryCode)).thenReturn(country);
-        when(monthlyNetIncomeCalculator.calculateNetMonthlyIncome(dailyRate, country)).thenReturn(expectedNetIncome);
+        when(monthlyNetIncomeCalculator.calculate(dailyRate, country)).thenReturn(expectedNetIncome);
 
         Money result = incomeCalculator.calculate(dailyRate, countryCode, currency);
 
         assertEquals(expectedNetIncome, result.getAmount());
         verify(countryRepository, times(1)).findOneByCountryCode(countryCode);
-        verify(monthlyNetIncomeCalculator, times(1)).calculateNetMonthlyIncome(dailyRate, country);
+        verify(monthlyNetIncomeCalculator, times(1)).calculate(dailyRate, country);
         verify(currencyConverter, never()).convert(any(), any(), any());
     }
 
@@ -71,14 +74,14 @@ public class IncomeCalculatorTest {
         BigDecimal expectedConvertedNetIncome = BigDecimal.valueOf(1000.20);
 
         when(countryRepository.findOneByCountryCode(plCountryCode)).thenReturn(country);
-        when(monthlyNetIncomeCalculator.calculateNetMonthlyIncome(dailyRate, country)).thenReturn(expectedNetIncome);
+        when(monthlyNetIncomeCalculator.calculate(dailyRate, country)).thenReturn(expectedNetIncome);
         when(currencyConverter.convert(plCurrency, ukCurrency, expectedNetIncome)).thenReturn(expectedConvertedNetIncome);
 
         Money result = incomeCalculator.calculate(dailyRate, plCountryCode, ukCurrency);
 
         assertEquals(expectedConvertedNetIncome, result.getAmount());
         verify(countryRepository, times(1)).findOneByCountryCode(plCountryCode);
-        verify(monthlyNetIncomeCalculator, times(1)).calculateNetMonthlyIncome(dailyRate, country);
+        verify(monthlyNetIncomeCalculator, times(1)).calculate(dailyRate, country);
         verify(currencyConverter, times(1)).convert(plCurrency, ukCurrency, expectedNetIncome);
     }
 
@@ -96,7 +99,7 @@ public class IncomeCalculatorTest {
         incomeCalculator.calculate(dailyRate, countryCode, currency);
 
         verify(countryRepository, times(1)).findOneByCountryCode(countryCode);
-        verify(monthlyNetIncomeCalculator, never()).calculateNetMonthlyIncome(any(), any());
+        verify(monthlyNetIncomeCalculator, never()).calculate(any(), any());
         verify(currencyConverter, never()).convert(any(), any(), any());
     }
 }

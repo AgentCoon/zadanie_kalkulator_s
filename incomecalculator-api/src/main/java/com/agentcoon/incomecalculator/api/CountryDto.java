@@ -6,8 +6,7 @@ public class CountryDto {
     private String countryCode;
     private String currency;
 
-    public CountryDto() {
-    }
+    public CountryDto() {}
 
     private CountryDto(String name, String countryCode, String currency) {
         this.name = name;
