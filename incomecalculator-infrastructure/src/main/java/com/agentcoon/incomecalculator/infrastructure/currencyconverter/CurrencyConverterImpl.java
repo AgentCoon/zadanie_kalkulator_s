@@ -5,6 +5,8 @@ import com.agentcoon.incomecalculator.domain.currencyconverter.CurrencyConverter
 import com.agentcoon.incomecalculator.domain.exception.NotFoundException;
 import com.agentcoon.incomecalculator.exchangerate.exception.ExchangeRateNotFoundException;
 import com.agentcoon.incomecalculator.infrastructure.exchangerate.ExchangeRateGateway;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,7 @@ import java.math.BigDecimal;
 
 @Component
 public class CurrencyConverterImpl implements CurrencyConverter {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final ExchangeRateGateway exchangeRateGateway;
 
@@ -28,6 +31,8 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
             return amount.multiply(rate);
         } catch (ExchangeRateNotFoundException e) {
+            logger.error("Exchange rate for {}->{} not found.",
+                    sourceCurrency.getCurrencyCode(), targetCurrency.getCurrencyCode());
             throw new NotFoundException(e.getMessage());
         }
     }

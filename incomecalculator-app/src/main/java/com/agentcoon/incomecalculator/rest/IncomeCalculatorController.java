@@ -5,7 +5,7 @@ import com.agentcoon.incomecalculator.api.MonthlyNetIncomeDto;
 import com.agentcoon.incomecalculator.app.boot.configuration.ExchangeRateProperties;
 import com.agentcoon.incomecalculator.domain.Currency;
 import com.agentcoon.incomecalculator.domain.Money;
-import com.agentcoon.incomecalculator.domain.calculator.MonthlyNetIncomeCalculator;
+import com.agentcoon.incomecalculator.domain.calculator.IncomeCalculator;
 import com.agentcoon.incomecalculator.domain.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +20,15 @@ import javax.ws.rs.core.MediaType;
 public class IncomeCalculatorController {
 
     private final ExchangeRateProperties exchangeRateProperties;
-    private final MonthlyNetIncomeCalculator monthlyNetIncomeCalculator;
+    private final IncomeCalculator incomeCalculator;
     private final MoneyMapper moneyMapper;
 
     @Autowired
     public IncomeCalculatorController(ExchangeRateProperties exchangeRateProperties,
-                                      MonthlyNetIncomeCalculator monthlyNetIncomeCalculator,
+                                      IncomeCalculator incomeCalculator,
                                       MoneyMapper moneyMapper) {
         this.exchangeRateProperties = exchangeRateProperties;
-        this.monthlyNetIncomeCalculator = monthlyNetIncomeCalculator;
+        this.incomeCalculator = incomeCalculator;
         this.moneyMapper = moneyMapper;
     }
 
@@ -37,7 +37,7 @@ public class IncomeCalculatorController {
 
         try {
             Currency targetCurrency = new Currency(exchangeRateProperties.getTargetCurrency());
-            Money calculatedNetIncome = monthlyNetIncomeCalculator.calculate(dto.getAmount(), dto.getCountryCode(), targetCurrency);
+            Money calculatedNetIncome = incomeCalculator.calculate(dto.getAmount(), dto.getCountryCode(), targetCurrency);
 
             return ResponseEntity.ok().body(moneyMapper.from(calculatedNetIncome));
         } catch (NotFoundException e) {

@@ -2,9 +2,12 @@ package com.agentcoon.incomecalculator.api;
 
 public class CountryDto {
 
-    private final String name;
-    private final String countryCode;
-    private final String currency;
+    private String name;
+    private String countryCode;
+    private String currency;
+
+    public CountryDto() {
+    }
 
     private CountryDto(String name, String countryCode, String currency) {
         this.name = name;

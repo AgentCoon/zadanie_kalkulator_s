@@ -15,14 +15,15 @@ import java.math.BigDecimal;
 public class ExchangeRateGateway {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${exchangeRateConfiguration.provider}")
     private String provider;
 
     private final ExchangeRateProviderStrategy exchangeRateProviderStrategy;
 
     @Autowired
-    public ExchangeRateGateway(ExchangeRateProviderStrategy exchangeRateProviderStrategy) {
+    public ExchangeRateGateway(ExchangeRateProviderStrategy exchangeRateProviderStrategy,
+                               @Value("${exchangeRateConfiguration.provider}") String provider) {
         this.exchangeRateProviderStrategy = exchangeRateProviderStrategy;
+        this.provider = provider;
     }
 
     public BigDecimal getExchangeRate(String sourceCurrency, String targetCurrency) throws ExchangeRateNotFoundException {
