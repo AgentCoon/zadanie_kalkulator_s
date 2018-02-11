@@ -15,9 +15,7 @@ import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class IncomeCalculatorControllerTest {
 
@@ -78,5 +76,18 @@ public class IncomeCalculatorControllerTest {
 
         ResponseEntity<MonthlyNetIncomeDto> response = incomeCalculatorController.calculateIncome(requestDto);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void calculateIncomeWhenInputInvalid() throws NotFoundException {
+        String countryCode = "UK";
+        BigDecimal dailyRate = BigDecimal.valueOf(-0.2);
+
+        IncomeRequestDto requestDto = new IncomeRequestDto(countryCode, dailyRate);
+
+        ResponseEntity<MonthlyNetIncomeDto> response = incomeCalculatorController.calculateIncome(requestDto);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        verify(exchangeRateProperties, never()).getTargetCurrency();
+        verify(incomeCalculator, never()).calculate(any(), any(), any());
     }
 }
