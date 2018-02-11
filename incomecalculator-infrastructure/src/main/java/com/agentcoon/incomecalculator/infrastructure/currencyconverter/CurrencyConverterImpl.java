@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Component
 public class CurrencyConverterImpl implements CurrencyConverter {
@@ -29,7 +30,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
         try {
             BigDecimal rate = exchangeRateGateway.getExchangeRate(sourceCurrency.getCurrencyCode(), targetCurrency.getCurrencyCode());
 
-            return amount.multiply(rate);
+            return amount.multiply(rate).setScale(2, RoundingMode.HALF_UP);
         } catch (ExchangeRateNotFoundException e) {
             logger.error("Exchange rate for {}->{} not found.",
                     sourceCurrency.getCurrencyCode(), targetCurrency.getCurrencyCode());
