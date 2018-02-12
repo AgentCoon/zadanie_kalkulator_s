@@ -23,7 +23,9 @@ Application runs as a Spring Boot Application.
 Run configuration:
 
 module: incomecalculator-app  
+
 main class: com.agentcoon.incomecalculator.app.boot.IncomeCalculatorApplication
+
 parameters: --spring.config.location=${workspace_loc:/incomecalculator-configuration}/src/main/resources/local/incomecalculator.yml
 
 
